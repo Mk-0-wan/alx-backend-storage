@@ -5,5 +5,4 @@
 
 def concat(str1: str, str2: str) -> str:
     """Joining two strings together"""
-    print("here")
     return "{}{}".format(str1, str2)
