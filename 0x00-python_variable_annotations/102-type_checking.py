@@ -4,6 +4,7 @@ from typing import TypeVar, List, Tuple
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
+    """zoom_array with atonatio"""
     zoomed_in: List = [
         item for item in lst
         for i in range(factor)
