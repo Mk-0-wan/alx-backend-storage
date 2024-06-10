@@ -2,15 +2,14 @@
 """Type Checking"""
 from typing import TypeVar, List, Tuple
 
-T = TypeVar('T')
 
-
-def zoom_array(lst: Tuple[T, ...], factor: int = 2) -> List[T]:
-    zoomed_in: List[T] = [
+def zoom_array(lst: Tuple, factor: int = 2) -> List:
+    zoomed_in: List = [
         item for item in lst
         for i in range(factor)
     ]
     return zoomed_in
+
 
 array = (12, 72, 91)
 
