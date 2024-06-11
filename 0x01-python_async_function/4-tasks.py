@@ -8,15 +8,14 @@ wait_random = __import__('0-basic_async_syntax').wait_random
 task_wait_random = __import__('3-tasks').task_wait_random
 
 
-def fix_array(arry: list, elem: float) -> list:
-    """Returns a sorted array in an ascending order"""
-    if not arry:
-        arry.append(elem)
+def fix_array(arry: List[float], elem: float) -> None:
+    """Inserts elem into arry maintaining
+    ascending order without duplicates."""
     for idx in range(len(arry)):
         if elem < arry[idx]:
             arry.insert(idx, elem)
+            return
     arry.append(elem)
-    return arry
 
 
 async def task_wait_n(n: int, max_delay: int) -> List[float]:
