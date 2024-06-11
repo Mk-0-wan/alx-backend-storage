@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Making multiple co-routine objects"""
 import asyncio
+from typing import List
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
@@ -16,7 +17,7 @@ def fix_array(arry: list, elem: float) -> list:
     arry.append(elem)
 
 
-async def wait_n(n: int, max_delay: int) -> list:
+async def wait_n(n: int, max_delay: int) -> List[float]:
     """Making mulitiple concurrency co-routine"""
     # make a list of all the co-routines returned
     tasks = [asyncio.create_task(wait_random(max_delay)) for _ in range(n)]
