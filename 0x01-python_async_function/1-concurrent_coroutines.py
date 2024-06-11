@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Making multiple co-routine objects"""
-import asyncio
 wait_random = __import__('0-basic_async_syntax').wait_random
+import asyncio
 
 
 def fix_array(arry: list, elem: float) -> list:
