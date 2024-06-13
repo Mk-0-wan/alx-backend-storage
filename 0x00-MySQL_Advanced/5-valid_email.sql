@@ -13,8 +13,12 @@ FOR EACH ROW
 BEGIN
 	IF NEW.email = OLD.email THEN
 		SET NEW.valid_email = 1;
+	ELSE IF NEW.email = NULL THEN
+		SET NEW.email = 0;
+	ELSE IF OLD.email = NULL THEN
+		SET NEW.email = 1;
 	ELSE 
-		SET NEW.valid_email = NULL;
+		SET NEW.valid_email = 0;
 	END IF;
 END$$
 
