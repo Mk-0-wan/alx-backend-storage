@@ -15,7 +15,8 @@ BEGIN
 	IF NEW.email = OLD.email THEN
 		SET NEW.valid_email = 1;
 		IF NEW.name != OLD.name THEN
-			UPDATE users SET name = NEW.name WHERE email = NEW.email;
+			SET NEW.name = NEW.name;
+		END IF;
 	ELSE IF NEW.email = NULL THEN
 		SET NEW.email = 0;
 	ELSE IF OLD.email = NULL THEN
