@@ -11,12 +11,16 @@ CREATE TRIGGER update_valid_email
 BEFORE UPDATE ON users
 FOR EACH ROW
 BEGIN
+	-- TODO: Still missing one checker
 	IF NEW.email = OLD.email THEN
 		SET NEW.valid_email = 1;
+		IF NEW.name != OLD.name THEN
+			UPDATE users SET name = NEW.name WHERE email = NEW.email;
 	ELSE IF NEW.email = NULL THEN
 		SET NEW.email = 0;
 	ELSE IF OLD.email = NULL THEN
 		SET NEW.email = 1;
+	
 	ELSE 
 		SET NEW.valid_email = 0;
 	END IF;
