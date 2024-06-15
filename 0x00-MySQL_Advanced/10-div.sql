@@ -1,17 +1,17 @@
 -- Creating an sql function
 DELIMITER $$ ;
 
-CREATE FUNCTION SafeDiv(
-	a INT,
-	b INT
-)
-RETURN FLOAT
+CREATE FUNCTION SafeDiv(a INT, b INT)
 BEGIN
-	IF b == 0 THEN
-		RETURN(0);
+	DECLARE x FLOAT DEFAULT 0;
+
+	IF b = 0 THEN
+		SET x = 0;
 	ELSE
-		RETURN(a / b);
+		SET x = a / b;
 	END IF;
+
+	RETURN x;
 END$$
 
 DELIMITER ; $$
