@@ -1,16 +1,17 @@
--- Division in sql
-DELIMITER $$
+-- Creating an sql function
+DELIMITER $$ ;
 
-CREATE FUNCTION precise_division(a INT, b INT)
-RETURNS DECIMAL(20, 10)
-DETERMINISTIC
+CREATE FUNCTION SafeDiv(
+	a INT,
+	b INT
+)
+RETURN FLOAT
 BEGIN
-    IF b = 0 THEN
-        RETURN 0;
-    ELSE
-        RETURN CAST(a AS DECIMAL(20, 10)) / CAST(b AS DECIMAL(20, 10));
-    END IF;
+	IF b == 0 THEN
+		RETURN(0);
+	ELSE
+		RETURN(a / b);
+	END IF;
 END$$
 
-DELIMITER ;
-
+DELIMITER ; $$
