@@ -1,7 +1,12 @@
 -- Creating an sql function
+
 DELIMITER $$ ;
 
-CREATE FUNCTION SafeDiv(a INT, b INT)
+CREATE FUNCTION SafeDiv(
+	a INT,
+       	b INT
+)
+RETURNS FLOAT
 BEGIN
 	DECLARE x FLOAT DEFAULT 0;
 
@@ -14,4 +19,4 @@ BEGIN
 	RETURN x;
 END$$
 
-DELIMITER ; $$
+DELIMITER ;
