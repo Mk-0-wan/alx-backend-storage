@@ -11,16 +11,10 @@ CREATE TRIGGER update_valid_email
 BEFORE UPDATE ON users
 FOR EACH ROW
 BEGIN
-	IF NEW.email = OLD.email THEN
-		SET NEW.valid_email = 1;
-		IF NEW.name != OLD.name THEN
-			-- Overwrite the old value with the new value
-			SET NEW.name = NEW.name;
-		END IF;
-	ELSE 
+	IF NEW.email <> OLD.email THEN
 		SET NEW.valid_email = 0;
 	END IF;
-END$$
+END $$
 
 -- Reset the delimiter to ;
 DELIMITER ;
