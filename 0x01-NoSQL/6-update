@@ -1,0 +1,5 @@
+// updating document with new values
+db.school.updateOne(
+  {"name": "Holberton"},
+  {$set: {"address": "972 Mission street"}}
+)
