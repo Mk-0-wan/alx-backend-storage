@@ -1,2 +1,2 @@
 // remove all the matching documents in a given collection
-db.school.remove({"$eq": {"name": "Holberton school"}}, "false")
+db.school.deleteOne({"name": "Holberton school"})
