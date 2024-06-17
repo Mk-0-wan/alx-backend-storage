@@ -1,0 +1,2 @@
+// showing all available databases and with thier storage size
+show dbs
