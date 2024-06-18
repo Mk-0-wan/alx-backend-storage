@@ -2,7 +2,7 @@
 """Creating a new attribute"""
 
 
-def schools_by_topic(mongo_collection, name, topic):
+def update_topics(mongo_collection, name, topics):
     """Updating the topics attribute in a document collection"""
-    updated = mongo_collection.update_one({'name': name}, {'$set': {'topics': topic}})
+    updated = mongo_collection.update_one({'name': name}, {'$set': {'topics': topics}})
     return updated
