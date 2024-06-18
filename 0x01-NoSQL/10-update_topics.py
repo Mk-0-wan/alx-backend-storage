@@ -4,5 +4,5 @@
 
 def schools_by_topic(mongo_collection, topic):
     """Updating the topics attribute in a document collection"""
-    updated = mongo_collection.update_one({'name': name}, {'$set': {'topics': topics}})
+    updated = mongo_collection.update_one({'name': name}, {'$set': {'topics': topic}})
     return updated
