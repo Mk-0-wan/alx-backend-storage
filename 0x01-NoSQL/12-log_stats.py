@@ -8,7 +8,7 @@ def count(mongo_collection):
     return mongo_collection.count_documents({})
 
 
-def search_method(mongo_coll):
+def search_method_used(mongo_coll):
     """returns the total count of all the methods in a doc"""
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     method_dict = {
@@ -30,7 +30,7 @@ def search_method_and_path(mongo_coll):
 if __name__ == '__main__':
     client = MongoClient('mongodb://localhost:27017')
     nginx_collection = client.logs.nginx
-    search_method = search_method(nginx_collection)
+    search_method = search_method_used(nginx_collection)
 
     print("{} logs".format(count(nginx_collection)))
     print("Methods:")
