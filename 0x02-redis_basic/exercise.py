@@ -3,7 +3,7 @@
 
 import uuid
 import redis
-from typing import Any, Union, Callable
+from typing import Any, Union, Callable, Optional
 
 
 class Cache:
@@ -27,36 +27,31 @@ class Cache:
 
     def get_str(self, key: Any) -> str:
         """returns the correct value(str type) from the get method"""
-        return str(self._redis.get(key))
+        return self.get(key, fn=str)
 
     def get_int(self, key: Any) -> str:
         """returns the correct value(str type) from the get method"""
-        return int(self._redis.get(key))
+        return self.get(key, fn=int)
 
-    def get(key: Union[str, int, bytes], fn: Callable[[Any], Union[str, int]) -> Any:
+    def get(self, key: Union[str, int, bytes],
+            fn: Optional[Callable[[bytes],
+                                  Union[
+                                      str,
+                                      int,
+                                      bytes,
+                                      float
+                                      ]]] = None) -> Any:
         """ A get method that take a key string argument and an optional
             Callable argument named fn.
-            This callable will be used to convert the data back to the desired format.
+            callable be used to convert the data back to the desired format.
         """
         try:
-            if type(key) == str:
-                ret = get_str(key)
-            elif type(key) == int:
-                ret = get_str(key)
-            return ret
-        except as e:
+            data = self._redis.get(key)
+            print(type(data))
+            if data is not None:
+                if fn is not None:
+                    return fn(data)
+                return data
+            return None
+        except Exception as e:
             print(e)
-
-
-if __name__ == '__main__':
-    cache = Cache()
-
-    TEST_CASES = {
-        b"foo": None,
-        123: int,
-        "bar": lambda d: d.decode("utf-8")
-    }
-
-    for value, fn in TEST_CASES.items():
-        key = cache.store(value)
-        assert cache.get(key, fn=fn) == value
