@@ -41,14 +41,14 @@ if __name__ == '__main__':
     print("Methods:")
     for idx, docs in enumerate(search_method):
         if idx == 0:
-            print(f"\tmethod GET: {docs}")
+            print(f"    method GET: {docs}")
         if idx == 1:
-            print(f"\tmethod POST: {docs}")
+            print(f"    method POST: {docs}")
         if idx == 2:
-            print(f"\tmethod PUT: {docs}")
+            print(f"    method PUT: {docs}")
         if idx == 3:
-            print(f"\tmethod PATCH: {docs}")
+            print(f"    method PATCH: {docs}")
         if idx == 4:
-            print(f"\tmethod DELETE: {docs}")
+            print(f"    method DELETE: {docs}")
 
     print(f"{search_method_and_path(nginx_collection)} status check")
