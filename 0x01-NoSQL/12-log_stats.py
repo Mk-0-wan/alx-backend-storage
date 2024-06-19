@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 """Getting nginx logs"""
-
 from pymongo import MongoClient
-# function to count all collections
-# function to handle search for docs with specific methods
-# function to handle search for docs with speicific
-# methods and also path=/status
 
 
 def count(mongo_collection):
@@ -13,14 +8,14 @@ def count(mongo_collection):
     return mongo_collection.count_documents({})
 
 
-def search_method(mongo_collection):
+def search_method(mongo_coll):
     """returns the total count of all the methods in a doc"""
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    methods_data = []
-    for method in methods:
-        count = mongo_collection.count_documents({"method": method})
-        methods_data.append(count)
-    return methods_data
+    method_dict = {
+            method: mongo_coll.count_documents({"method": method})
+            for method in methods
+        }
+    return method_dict
 
 
 def search_method_and_path(mongo_coll):
@@ -37,18 +32,8 @@ if __name__ == '__main__':
     nginx_collection = client.logs.nginx
     search_method = search_method(nginx_collection)
 
-    print(f"{count(nginx_collection)} logs")
+    print(f"{} logs".format(count(nginx_collection)))
     print("Methods:")
-    for idx, docs in enumerate(search_method):
-        if idx == 0:
-            print(f"\tmethod GET: {docs}")
-        if idx == 1:
-            print(f"\tmethod POST: {docs}")
-        if idx == 2:
-            print(f"\tmethod PUT: {docs}")
-        if idx == 3:
-            print(f"\tmethod PATCH: {docs}")
-        if idx == 4:
-            print(f"\tmethod DELETE: {docs}")
-
-    print(f"{search_method_and_path(nginx_collection)} status check")
+    for method in search_method:
+        print("\tmethod {}: {}".format(method, search_method[method]))
+    print(f"{} status check".format(search_method_and_path(nginx_collection)))
