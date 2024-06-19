@@ -15,7 +15,7 @@ def count(mongo_collection):
 
 def search_method(mongo_collection):
     """returns the total count of all the methods in a doc"""
-    methods = ["GET", "POST", "PUT", "PATCH"]
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     methods_data = []
     for method in methods:
         count = mongo_collection.count_documents({"method": method})
