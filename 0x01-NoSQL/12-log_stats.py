@@ -37,6 +37,7 @@ if __name__ == '__main__':
 
     print(f"{total_logs} logs")
     print("Methods: ")
-    for method in method_counts:
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    for method in methods:
         print(f"\tmethod {method}: {method_counts[method]}")
     print(f"{status_checks} status check")
