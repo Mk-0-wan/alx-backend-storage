@@ -43,9 +43,9 @@ if __name__ == '__main__':
         if idx == 0:
             print(f"\tmethod GET: {docs}")
         if idx == 1:
-            print(f"\tmethod PUT: {docs}")
-        if idx == 2:
             print(f"\tmethod POST: {docs}")
+        if idx == 2:
+            print(f"\tmethod PUT: {docs}")
         if idx == 3:
             print(f"\tmethod PATCH: {docs}")
         if idx == 4:
