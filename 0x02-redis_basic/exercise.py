@@ -47,7 +47,6 @@ class Cache:
         """
         try:
             data = self._redis.get(key)
-            print(type(data))
             if data is not None:
                 if fn is not None:
                     return fn(data)
