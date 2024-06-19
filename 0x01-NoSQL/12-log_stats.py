@@ -32,8 +32,8 @@ if __name__ == '__main__':
     nginx_collection = client.logs.nginx
     search_method = search_method(nginx_collection)
 
-    print(f"{} logs".format(count(nginx_collection)))
+    print("{} logs".format(count(nginx_collection)))
     print("Methods:")
     for method in search_method:
         print("\tmethod {}: {}".format(method, search_method[method]))
-    print(f"{} status check".format(search_method_and_path(nginx_collection)))
+    print("{} status check".format(search_method_and_path(nginx_collection)))
