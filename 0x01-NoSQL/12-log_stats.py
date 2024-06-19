@@ -36,7 +36,7 @@ if __name__ == '__main__':
     status_checks = count_status_checks(nginx_collection)
 
     print(f"{total_logs} logs")
-    print("Methods:")
+    print("Methods: ")
     for method, count in method_counts.items():
         print(f"\tmethod {method}: {count}")
     print(f"{status_checks} status check")
