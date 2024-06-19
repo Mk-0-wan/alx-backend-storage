@@ -53,4 +53,4 @@ class Cache:
                 return data
             return None
         except Exception as e:
-            print(e)
+            raise(e)
