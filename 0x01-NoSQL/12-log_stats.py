@@ -3,21 +3,6 @@
 from pymongo import MongoClient
 
 
-def count_documents(mongo_coll):
-    """Returns total number of documents in the collection."""
-    return mongo_coll.count_documents({})
-
-
-def count_methods(mongo_coll):
-    """Returns a dictionary with the total count
-    of each HTTP method in the collection."""
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    return {
-            method: mongo_coll.count_documents({"method": method})
-            for method in methods
-            }
-
-
 def count_status_checks(mongo_coll):
     """Returns the total count of documents
     with method 'GET' and path '/status'."""
@@ -31,13 +16,13 @@ if __name__ == '__main__':
     client = MongoClient('mongodb://127.0.0.1:27017')
     nginx_collection = client.logs.nginx
 
-    total_logs = count_documents(nginx_collection)
-    method_counts = count_methods(nginx_collection)
+    total_logs = nginx_collection.count_documents()
     status_checks = count_status_checks(nginx_collection)
 
     print(f"{total_logs} logs")
     print("Methods: ")
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for method in methods:
-        print(f"\tmethod {method}: {method_counts[method]}")
+        count_methods = nginx_collection.count_documents({"method": method})
+        print(f"\tmethod {method}: {count_methods}")
     print(f"{status_checks} status check")
