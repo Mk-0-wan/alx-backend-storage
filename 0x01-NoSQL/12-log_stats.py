@@ -3,51 +3,40 @@
 from pymongo import MongoClient
 
 
-def count(mongo_collection):
-    """returns total number of collections in the database"""
-    return mongo_collection.count_documents({})
+def count_documents(mongo_coll):
+    """Returns total number of documents in the collection."""
+    return mongo_coll.count_documents({})
 
 
-def search_method_used(mongo_coll):
-    """returns the total count of all the methods in a doc"""
+def count_methods(mongo_coll):
+    """Returns a dictionary with the total count
+    of each HTTP method in the collection."""
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    method_dict = {
+    return {
             method: mongo_coll.count_documents({"method": method})
             for method in methods
-        }
-    return method_dict
+            }
 
 
-def search_method_and_path(mongo_coll):
-    """returns the total count of docs matching the
-    search_method and path attribute"""
+def count_status_checks(mongo_coll):
+    """Returns the total count of documents
+    with method 'GET' and path '/status'."""
     return mongo_coll.count_documents({
+        "method": "GET",
         "path": "/status"
         })
 
 
 if __name__ == '__main__':
     client = MongoClient('mongodb://127.0.0.1:27017')
-    nginx_coll = client.logs.nginx
-    search_method = search_method_used(nginx_coll)
+    nginx_collection = client.logs.nginx
 
-    print("{} logs".format(count(nginx_coll)))
+    total_logs = count_documents(nginx_collection)
+    method_counts = count_methods(nginx_collection)
+    status_checks = count_status_checks(nginx_collection)
+
+    print(f"{total_logs} logs")
     print("Methods:")
-    # for method in search_method:
-    # print("\tmethod {}: {}".format(method, search_method[method]))
-    print("\tmethod GET: {}".format(
-        nginx_coll.count_documents({"method": "GET"})
-        ))
-    print("\tmethod POST: {}".format(
-        nginx_coll.count_documents({"method": "POST"})
-        ))
-    print("\tmethod PUT: {}".format(
-        nginx_coll.count_documents({"method": "PUT"})
-        ))
-    print("\tmethod PATCH: {}".format(
-        nginx_coll.count_documents({"method": "PATCH"})
-        ))
-    print("\tmethod DELETE: {}".format(
-        nginx_coll.count_documents({"method": "DELETE"})
-        ))
-    print("{} status check".format(search_method_and_path(nginx_coll)))
+    for method, count in method_counts.items():
+        print(f"\tmethod {method}: {count}")
+    print(f"{status_checks} status check")
