@@ -4,10 +4,12 @@
 import uuid
 import redis
 import functools
-from typing import Any, Union, Callable, Optional
+from typing import Any, Union, Callable, Optional, TypeVar
+
+wrf = TypeVar('wrf', bound=Callable[..., Any])
 
 
-def count_calls(method: Callable) -> Callable:
+def count_calls(method: wrf) -> wrf:
     """decorator func"""
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
