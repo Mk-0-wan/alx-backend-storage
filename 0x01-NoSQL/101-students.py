@@ -24,4 +24,5 @@ def top_students(mongo_collection):
             }}
         ]
     data = list(mongo_collection.aggregate(pipline))
-    return data.sort(key=fn, reverse=True)
+    data.sort(key=fn, reverse=True)
+    return data
