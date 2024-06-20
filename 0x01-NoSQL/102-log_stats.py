@@ -13,7 +13,7 @@ def count_status_checks(mongo_coll):
     with method 'GET' and path '/status'."""
     return mongo_coll.count_documents({
         "method": "GET",
-      "path": "/status"
+        "path": "/status"
         })
 
 
@@ -32,7 +32,6 @@ if __name__ == '__main__':
         print(f"\tmethod {method}: {count_methods}")
     print(f"{status_checks} status check")
     print("IPs:")
-    count = 0
     pipeline = [
             {"$group": {
                 "_id": "$ip",
