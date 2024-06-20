@@ -13,26 +13,8 @@ def count_status_checks(mongo_coll):
     with method 'GET' and path '/status'."""
     return mongo_coll.count_documents({
         "method": "GET",
-        "path": "/status"
+      "path": "/status"
         })
-
-
-def get_ips(mongo_coll):
-    """grouping ips"""
-    pipeline = [
-            {"$group": {
-                "_id": "$ip",
-                "count": {"$sum": 1}
-                }},
-            {"$project": {
-                "_id": 0,
-                "ip": "$_id",
-                "count": 1
-                }}
-            ]
-    data = list(mongo_coll.aggregate(pipeline))
-    data.sort(key=fn, reverse=True)
-    return data
 
 
 if __name__ == '__main__':
@@ -51,8 +33,21 @@ if __name__ == '__main__':
     print(f"{status_checks} status check")
     print("IPs:")
     count = 0
-    for data in get_ips(nginx_collection):
-        if count == 10:
-            break
-        print(f"\t{data.get('ip')}: {data.get('count')}")
+    pipeline = [
+            {"$group": {
+                "_id": "$ip",
+                "count": {"$sum": 1}
+                }},
+            {"$project": {
+                "_id": 0,
+                "ip": "$_id",
+                "count": 1
+                }},
+            {"$sort": {
+                "count": -1
+                }}
+            ]
+    for count in range(10):
+        ip_logs = nginx_collection.aggregate(pipeline)
+        print(f"\t{ip_logs[count].get('ip')}: {ip_logs[count].get('count')}")
         count += 1
