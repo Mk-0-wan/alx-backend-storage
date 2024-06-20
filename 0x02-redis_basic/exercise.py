@@ -102,9 +102,8 @@ class Cache:
 def replay(method: Callable) -> str:
     """prints out the logs of a function"""
     m_name = method.__qualname__
-    print(m_name)
-    history = Cache().get_call_history(m_name)
-    print(history)
+    cache = method.__self__
+    history = cache.get_call_history(m_name)
     m_call_counts = len(history["inputs"])
 
     print(f"{m_name} was called {m_call_counts} times:")
