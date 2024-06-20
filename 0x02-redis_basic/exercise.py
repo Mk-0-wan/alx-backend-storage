@@ -10,7 +10,7 @@ from typing import Any, Union, Callable, Optional
 def call_history(method: Callable) -> Callable:
     """decorator function"""
     @functools.wraps(method)
-    def wrapper(self, *args, **kwargs):
+    def wrapper(self, *args, **kwargs) -> Any:
         """wrapper function"""
         # get the keys
         input_key = f"{method.__qualname__}:inputs"
@@ -45,8 +45,8 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    @count_calls
     @call_history
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Generate a key and store the data in the Redis database"""
         gen_key = uuid.uuid4().hex
@@ -88,3 +88,25 @@ class Cache:
             return None
         except Exception as e:
             raise (e)
+
+    def get_call_history(self, method_name:str) -> dict:
+        """retrive call history inputs and outputs of the
+        method passed"""
+        inputs = self._redis.lrange(f"{method_name}:inputs", 0, -1)
+        outputs = self._redis.lrange(f"{method_name}:outputs", 0, -1)
+        return {
+                "inputs": [in_data.decode() for in_data in inputs],
+                "outputs": [out_data.decode() for out_data in outputs]
+                }
+
+def replay(method: Callable) -> str:
+    """prints out the logs of a function"""
+    m_name = method.__qualname__
+    print(m_name)
+    history = Cache().get_call_history(m_name)
+    print(history)
+    m_call_counts = len(history["inputs"])
+
+    print(f"{m_name} was called {m_call_counts} times:")
+    for ins, outs in zip(history['inputs'], history['outputs']):
+        print(f"{m_name}(*{ins}) -> {outs}")
