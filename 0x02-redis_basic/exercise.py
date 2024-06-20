@@ -7,10 +7,10 @@ import functools
 from typing import Any, Union, Callable, Optional
 
 
-def count_calls(method: Callable) -> Callable:
+def count_calls(method: Callable[..., Any]) -> Callable:
     """decorator func"""
     @functools.wraps(method)
-    def wrapper(self, *args: Any, **kwargs: Any) -> Callable:
+    def wrapper(self, *args, **kwargs):
         """wrapper function"""
         key = f"{method.__qualname__}"
         self._redis.incr(key)
