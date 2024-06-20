@@ -4,6 +4,11 @@
 from pymongo import MongoClient
 
 
+def fn(key):
+    """function that sorts the list according to the list"""
+    return key['averageScore']
+
+
 def top_students(mongo_collection):
     """lists out all the top top_students according
     to their average scores"""
@@ -18,4 +23,5 @@ def top_students(mongo_collection):
             "averageScore": 1
             }}
         ]
-    return list(mongo_collection.aggregate(pipline))
+    data = list(mongo_collection.aggregate(pipline))
+    return data.sort(key=fn, reverse=True)
