@@ -16,7 +16,7 @@ def call_history(method: Callable) -> Callable:
         input_key = f"{method.__qualname__}:inputs"
         output_key = f"{method.__qualname__}:outputs"
 
-        #store inputs
+        # store inputs
         self._redis.rpush(input_key, str(args))
 
         # call method and store the value
@@ -88,19 +88,3 @@ class Cache:
             return None
         except Exception as e:
             raise (e)
-
-
-cache = Cache()
-
-s1 = cache.store("first")
-print(s1)
-s2 = cache.store("secont")
-print(s2)
-s3 = cache.store("third")
-print(s3)
-
-inputs = cache._redis.lrange("{}:inputs".format(cache.store.__qualname__), 0, -1)
-outputs = cache._redis.lrange("{}:outputs".format(cache.store.__qualname__), 0, -1)
-
-print("inputs: {}".format(inputs))
-print("outputs: {}".format(outputs))
