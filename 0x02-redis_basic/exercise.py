@@ -89,7 +89,7 @@ class Cache:
         except Exception as e:
             raise (e)
 
-    def get_call_history(self, method_name:str) -> dict:
+    def get_call_history(self, method_name: str) -> dict:
         """retrive call history inputs and outputs of the
         method passed"""
         inputs = self._redis.lrange(f"{method_name}:inputs", 0, -1)
@@ -98,6 +98,7 @@ class Cache:
                 "inputs": [in_data.decode() for in_data in inputs],
                 "outputs": [out_data.decode() for out_data in outputs]
                 }
+
 
 def replay(method: Callable) -> str:
     """prints out the logs of a function"""
