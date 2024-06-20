@@ -10,7 +10,7 @@ from typing import Any, Union, Callable, Optional
 def call_history(method: Callable) -> Callable:
     """decorator function"""
     @functools.wraps(method)
-    def wrapper(self, *args, **kwargs) -> Any:
+    def wrapper(self, *args: Any, **kwargs: Any) -> Any:
         """wrapper function"""
         # get the keys
         input_key = f"{method.__qualname__}:inputs"
