@@ -13,6 +13,7 @@ def count_status_checks(mongo_coll):
 
 
 def get_logs():
+    """func"""
     client = MongoClient('mongodb://127.0.0.1:27017')
     nginx_collection = client.logs.nginx
 
