@@ -12,7 +12,7 @@ def count_status_checks(mongo_coll):
         })
 
 
-if __name__ == '__main__':
+def get_logs():
     client = MongoClient('mongodb://127.0.0.1:27017')
     nginx_collection = client.logs.nginx
 
@@ -44,3 +44,7 @@ if __name__ == '__main__':
     logs = nginx_collection.aggregate(pipeline)
     for ip_logs in logs:
         print(f"\t{ip_logs.get('_id')}: {ip_logs.get('count')}")
+
+
+if __name__ == "__main__":
+    get_logs()
