@@ -3,11 +3,6 @@
 from pymongo import MongoClient
 
 
-def fn(func):
-    """sort callback function"""
-    return func['count']
-
-
 def count_status_checks(mongo_coll):
     """Returns the total count of documents
     with method 'GET' and path '/status'."""
