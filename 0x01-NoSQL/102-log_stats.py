@@ -33,20 +33,19 @@ if __name__ == '__main__':
     print(f"{status_checks} status check")
     print("IPs:")
     pipeline = [
-            {"$group": {
-                "_id": "$ip",
-                "count": {"$sum": 1}
-                }},
-            {"$project": {
-                "_id": 0,
-                "ip": "$_id",
-                "count": 1
-                }},
-            {"$sort": {
-                "count": -1
-                }}
-            ]
-    for count in range(10):
-        ip_logs = nginx_collection.aggregate(pipeline)
-        print(f"\t{ip_logs[count].get('ip')}: {ip_logs[count].get('count')}")
-        count += 1
+             {"$project": {
+                 "_id": 0,
+                 "ip": 1
+                 }},
+             {"$group": {
+                 "_id": "$ip",
+                 "count": {"$sum": 1}
+                 }},
+             {"$sort": {
+                 "count": -1
+                 }},
+             {"$limit": 10}
+             ]
+    logs = nginx_collection.aggregate(pipeline)
+    for ip_logs in logs:
+        print(f"\t{ip_logs.get('_id')}: {ip_logs.get('count')}")
