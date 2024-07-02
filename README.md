@@ -1,1 +1,1 @@
-# Type Annotation whichw will allow you to write readable python code
+## All the python knowledge for backend study
